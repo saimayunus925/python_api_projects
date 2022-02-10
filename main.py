@@ -12,18 +12,16 @@ API_KEY = os.getenv('API_KEY') # my private Yelp API key
 print("--------------------------------- WILDEST YELP REVIEWS ---------------------------------")
 
 business_name = input("Enter a business name: ")
-location_name = input("Enter the location you're looking for (ex. if you entered 'Amazon' previously and you're looking for an Amazon store in CA, type 'California' here): ")
-city_name = input("Enter the business' city name: ")
+location_name = input("Enter the location you're looking for (city, state, address, or zip code): ")
 result_business = {}
 
 business_json = requests.get('https://api.yelp.com/v3/businesses/search', params={'term': business_name, 'location': location_name}, headers={'Authorization': f'Bearer {API_KEY}'}).json() # returns the data for the business that the user entered
 
 businesses = business_json['businesses'] # returns list of dictionaries, each dictionary having a business' info
 # print(businesses)
+business_ids = [] # each business ID goes here so that we can use the ID to get the business' reviews
 
 for b in businesses: 
-    # once we've gotten the city the user is looking for, we'll go through each business to find a match
-    if (city_name == b['location']['city']): result_business = b
-    else: continue
+    business_ids.append(b['id']) # append each business' ID to the business list
+    # print(b['id'])
 
-print(result_business)
