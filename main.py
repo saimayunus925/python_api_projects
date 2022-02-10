@@ -24,8 +24,20 @@ for b in businesses:
     business_ids.append(b['id']) # append each business' ID to the business list
     # print(b['id'])
 
-reviews_collections = [] # list of 'reviews' dictionaries for each business
+reviews_collection = []
 
 for id in business_ids:
-    reviews_json = requests.get(f'https://api.yelp.com/v3/businesses/{id}/reviews') # the business' 'reviews' dictionary (which has a list of dictionaries, really)
-    print(reviews_json)
+    reviews_json = requests.get(f'https://api.yelp.com/v3/businesses/{id}/reviews', headers={'Authorization': f'Bearer {API_KEY}'}).json() # the business' reviews
+    reviews = reviews_json['reviews'] # business' list of 'review' dictionaries
+    reviews_collection.append(reviews) # append each business' list of 'reviews' to collection
+    # print(reviews)
+
+
+for reviews_list in reviews_collection:
+    # 'reviews_list' - each business' list of reviews
+    for r in reviews_list:
+        # 'r' - each 'review' dictionary of the given reviews list
+        print(f"Name: {r['user']['name']}") # reviewer name
+        print(f"Rating: {r['rating']} out of 5 stars") # reviewer's rating of the business
+        print(f"Date Posted: {r['time_created']}") # time/date the review was typed/posted
+        print(f"Text: {r['text']}") # the best part -  the review content!
