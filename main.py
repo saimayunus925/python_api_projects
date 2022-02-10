@@ -13,7 +13,6 @@ print("--------------------------------- WILDEST YELP REVIEWS ------------------
 
 business_name = input("Enter a business name: ")
 location_name = input("Enter the location you're looking for (city, state, address, or zip code): ")
-result_business = {}
 
 business_json = requests.get('https://api.yelp.com/v3/businesses/search', params={'term': business_name, 'location': location_name}, headers={'Authorization': f'Bearer {API_KEY}'}).json() # returns the data for the business that the user entered
 
@@ -25,3 +24,8 @@ for b in businesses:
     business_ids.append(b['id']) # append each business' ID to the business list
     # print(b['id'])
 
+reviews_collections = [] # list of 'reviews' dictionaries for each business
+
+for id in business_ids:
+    reviews_json = requests.get(f'https://api.yelp.com/v3/businesses/{id}/reviews') # the business' 'reviews' dictionary (which has a list of dictionaries, really)
+    print(reviews_json)
