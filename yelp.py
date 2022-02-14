@@ -41,3 +41,4 @@ for reviews_list in reviews_collection:
         print(f"Rating: {r['rating']} out of 5 stars") # reviewer's rating of the business
         print(f"Date Posted: {r['time_created']}") # time/date the review was typed/posted
         print(f"Text: {r['text']}") # the best part -  the review content!
+
