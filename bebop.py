@@ -7,7 +7,9 @@ def daily_bebop_quote() -> str:
     # generates a random Bebop quote from our API URL
     quotes = requests.get('https://animechan.vercel.app/api/quotes/anime?title=cowboy bebop').json()
     quote = random.choice(quotes) # dictionary w/ random quote we want
-    print(f"{quote['quote']} - {quote['character']}") # prints the quote and who said it
+    return f"{quote['quote']} - {quote['character']}" # returns the quote and who said it
+
 
 if __name__ == "__main__":
-    daily_bebop_quote()
+    q = daily_bebop_quote()
+    print(q)
